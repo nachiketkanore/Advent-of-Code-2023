@@ -40,19 +40,6 @@ void input() {
 	}
 }
 
-int get_location(int x) {
-	F0R(mapping_id, 7) {
-		for (auto [dest, src, len] : ranges[mapping_id]) {
-			if (src <= x && x <= src + len - 1) {
-				int diff = x - src;
-				x = dest + diff;
-				break;
-			}
-		}
-	}
-	return x;
-}
-
 pair<int, int> intersection(int l1, int r1, int l2, int r2) {
 	if (r1 < l2 || r2 < l1)
 		return { -1, -1 };

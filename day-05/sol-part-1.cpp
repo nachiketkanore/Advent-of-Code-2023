@@ -60,6 +60,7 @@ int32_t main() {
 				}
 			}
 		}
+		// see("final = ", x);
 		ans = min(ans, x);
 	}
 	cout << ans;
