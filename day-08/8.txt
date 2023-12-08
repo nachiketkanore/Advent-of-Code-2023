@@ -1,0 +1,14 @@
+1 0 A A
+2 1 B B
+3 0 Z C
+4 1 B Z
+5 0 Z B
+6 1 B C
+7 0 Z Z
+
+
+choices for 1st:  3 5 7
+choices for 2nd:  4 7
+choices for 3nd:  1 5 10 20
+
+answer = lcm(jumps required for each starting node to reach a terminating node for the first time)
