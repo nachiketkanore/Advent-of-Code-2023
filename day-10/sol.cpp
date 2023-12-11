@@ -98,10 +98,14 @@ int solve(const vector<string>& A) {
 			}
 		}
 	}
-	// F0R(i, N) F0R(j, M) cout << dist[i][j] << " \n"[j == M - 1];
 	int ans = 0;
-	F0R(i, N) F0R(j, M) if (dist[i][j] < 1e9) ans = max(ans, dist[i][j]);
-	// cout << "max distance = " << ans << '\n';
+	F0R(i, N) F0R(j, M) if (dist[i][j] < 1e9) {
+		cout << "X\n"[j == M - 1];
+		ans = max(ans, dist[i][j]);
+	}
+	else {
+		cout << ".\n"[j == M - 1];
+	}
 	return ans;
 }
 
