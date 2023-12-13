@@ -17,86 +17,57 @@ using namespace std;
 #define F0R(i, R) for (int i = (0); i < (R); ++i)
 #define FOR(i, L, R) for (int i = (L); i <= (R); ++i)
 
-int solve_individual_vertical(const vector<string> mat) {
+int solve_vertical(const vector<string>& mat) {
 	const int N = mat.size();
 	const int M = mat[0].size();
+	int ans = 0;
 
 	// vertical line
 	FOR(col, 1, M - 1) {
-		bool good = true;
+		int bad = 0;
 		F0R(row, N) {
 			int c1 = col - 1, c2 = col;
 			while (c1 >= 0 && c2 < M) {
-				good &= mat[row][c1--] == mat[row][c2++];
+				if (mat[row][c1--] != mat[row][c2++]) {
+					++bad;
+				}
 			}
 		}
-		if (good) {
-			return col;
+		if (bad == 1) {
+			ans += col;
 		}
 	}
-	return -1;
+	return ans;
 }
 
-int solve_individual_horizontal(const vector<string> mat) {
+int solve_horizontal(const vector<string>& mat) {
 	const int N = mat.size();
 	const int M = mat[0].size();
+	int ans = 0;
 
 	// horizontal line
 	FOR(row, 1, N - 1) {
-		bool good = true;
+		int bad = 0;
 		F0R(col, M) {
 			int r1 = row - 1, r2 = row;
 			while (r1 >= 0 && r2 < N) {
-				good &= mat[r1--][col] == mat[r2++][col];
+				if (mat[r1--][col] != mat[r2++][col]) {
+					++bad;
+				}
 			}
 		}
-		if (good) {
-			return row;
+		if (bad == 1) {
+			ans += 100 * row;
 		}
 	}
-	return -1;
+	return ans;
 }
 
 int solve(vector<string> mat) {
-	const int N = mat.size();
-	const int M = mat[0].size();
-	int sum = 0;
-	int original_horizontal_line = solve_individual_horizontal(mat);
-	int original_vertical_line = solve_individual_vertical(mat);
-	// see(original_horizontal_line);
-
-	F0R(i, N) {
-		F0R(j, M) {
-			mat[i][j] = (mat[i][j] == '#' ? '.' : '#');
-			int new_horizontal_line = solve_individual_horizontal(mat);
-			mat[i][j] = (mat[i][j] == '#' ? '.' : '#');
-			if (new_horizontal_line != -1 && new_horizontal_line != original_horizontal_line) {
-				sum += 100 * new_horizontal_line;
-			}
-		}
-	}
-	F0R(i, N) {
-		F0R(j, M) {
-			mat[i][j] = (mat[i][j] == '#' ? '.' : '#');
-			int new_vertical_line = solve_individual_vertical(mat);
-			mat[i][j] = (mat[i][j] == '#' ? '.' : '#');
-			if (new_vertical_line != -1 && new_vertical_line != original_vertical_line) {
-				sum += new_vertical_line;
-				// return sum;
-			}
-		}
-	}
-
-	// see(original_vertical_line, original_horizontal_line, "NOT FOUND");
-	// for (string row : mat) {
-	// 	cout << row << endl;
-	// }
-	// see("......");
-
-	return sum;
+	return solve_vertical(mat) + solve_horizontal(mat);
 }
 
-int solve_part_one() {
+int solve_part_two() {
 	int answer = 0;
 
 	string line;
@@ -115,7 +86,9 @@ int solve_part_one() {
 }
 
 int32_t main() {
+	// part two samples:
 	// freopen("in1", "r", stdin);
-	// freopen("test", "r", stdin);
-	cout << solve_part_one();
+	// part two large test
+	freopen("test", "r", stdin);
+	cout << solve_part_two();
 }
